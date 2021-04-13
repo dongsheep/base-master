@@ -10,7 +10,7 @@ import com.meizu.base.dto.UserDto;
 import com.meizu.base.service.UserService;
 
 @RestController
-public class UserController implements UserClientApi  {
+public class UserController implements UserClientApi {
 	
 	@Autowired
 	private UserService userService;

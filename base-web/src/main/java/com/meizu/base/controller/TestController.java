@@ -19,6 +19,8 @@ import com.meizu.base.constant.StatusCode;
 import com.meizu.base.dto.ResultDto;
 import com.meizu.base.dto.UserDto;
 import com.meizu.base.exception.BussinessException;
+import com.meizu.base.service.HelloService;
+import com.meizu.base.service.UserService;
 import com.meizu.base.util.LogUtil;
 import com.meizu.base.util.ResponseUtil;
 
@@ -49,8 +51,11 @@ public class TestController {
 		return restTemplate.getForObject("http://base-service/hello/" + str, String.class);
 	}
 
+//	@Autowired
+//	private HelloClientApi client;
+	
 	@Autowired
-	private HelloClientApi client;
+	private HelloService helloService;
 
 	/**
 	 * Feign-轻量级RESTful，内置了Ribbon
@@ -60,16 +65,20 @@ public class TestController {
 	 */
 	@RequestMapping(value = "/hello2/{str}", method = RequestMethod.GET)
 	public String hello2(@PathVariable String str) {
-		return client.sayHello("2021");
+//		return client.sayHello("2021");
+		return helloService.sayHello("2021");
 	}
 
+//	@Autowired
+//	private UserClientApi userClientApi;
+	
 	@Autowired
-	private UserClientApi userClientApi;
+	private UserService userService;
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
 	public ResultDto<List<UserDto>> getUsers() {
 		long st = System.currentTimeMillis();
-		List<UserDto> users = userClientApi.getUsers();
+		List<UserDto> users = userService.getUsers();
 		long ed = System.currentTimeMillis();
 		System.err.println("users time:" + (ed - st) + "ms");
 		return ResponseUtil.ok(users);
@@ -81,7 +90,7 @@ public class TestController {
 		user.setName("Tom");
 		user.setSex(1);
 		user.setSexText("男");
-		UserDto dto = userClientApi.addUser(user);
+		UserDto dto = userService.addUser(user);
 		return ResponseUtil.ok(dto);
 	}
 
@@ -92,13 +101,13 @@ public class TestController {
 		user.setName("Susan");
 		user.setSex(2);
 		user.setSexText("女");
-		UserDto dto = userClientApi.updateUser(user);
+		UserDto dto = userService.updateUser(user);
 		return ResponseUtil.ok(dto);
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public ResultDto<Object> deleteUser() {
-		int count = userClientApi.deleteUser(6);
+		int count = userService.deleteUser(6);
 		return ResponseUtil.ok(count);
 	}
 
@@ -110,14 +119,14 @@ public class TestController {
 			user.setName("Jack");
 			user.setSex(1);
 			user.setSexText("男");
-			UserDto one = userClientApi.addUser(user);
+			UserDto one = userService.addUser(user);
 
 			UserDto user2 = new UserDto();
 			user2.setId(1);
 			user2.setName("Susan");
 			user2.setSex(2);
 			user2.setSexText("女");
-			UserDto two = userClientApi.updateUser(user);
+			UserDto two = userService.updateUser(user);
 
 		} catch (Exception e) {
 			e.printStackTrace();

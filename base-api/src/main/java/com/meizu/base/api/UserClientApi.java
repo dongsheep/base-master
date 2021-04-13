@@ -2,7 +2,7 @@ package com.meizu.base.api;
 
 import java.util.List;
 
-import org.springframework.cloud.openfeign.FeignClient;
+//import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ import com.meizu.base.dto.UserDto;
  *
  */
 
-@FeignClient(name = "base-service")
+//@FeignClient(name = "base-service")
 public interface UserClientApi {
 	
 	@PostMapping(value = "/users")
