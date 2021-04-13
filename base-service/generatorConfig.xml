@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="myGenerator" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+			<property name="addRemarkComments" value="true"/>
+		</commentGenerator>
+		<!-- 数据库连接 -->
+		<jdbcConnection
+			connectionURL="jdbc:mysql://127.0.0.1:3306/base_db?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai"
+			driverClass="com.mysql.cj.jdbc.Driver" password="root" userId="root">
+			<!--MySQL 8.x 需要指定服务器的时区-->
+            <property name="serverTimezone" value="Asia/Shanghai"/>
+            <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+            <!--参考 : http://www.mybatis.org/generator/usage/mysql.html-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+            <!-- MySQL8默认启用 SSL ,不关闭会有警告-->
+            <property name="useSSL" value="false"/>
+		</jdbcConnection>
+		<!-- 实体类 -->
+		<javaModelGenerator targetPackage="com.meizu.base.domain" targetProject="base-service/src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- mapper.xml -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="base-service/src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- mapper接口 -->
+		<javaClientGenerator targetPackage="com.meizu.base.mapper" targetProject="base-service/src/main/java" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 数据库表 -->
+		<table tableName="t_user" domainObjectName="UserEntity" mapperName="UserMapper"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+	</context>
+</generatorConfiguration>

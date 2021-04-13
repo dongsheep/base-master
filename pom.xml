@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.4</version>
+	</parent>
+	
+	<groupId>com.meizu.base</groupId>
+	<artifactId>base-master</artifactId>
+	<version>${base-master.version}</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>base-web</module>
+		<module>base-service</module>
+		<module>base-api</module>
+		<module>base-common</module>
+    	<module>base-gateway</module>
+  	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<!-- 解决eclipse编译pom.xml报错 -->
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<!-- 跳过测试 -->
+		<skipTests>true</skipTests>
+
+		<base-master.version>0.0.1-SNAPSHOT</base-master.version>
+		<base-web.version>0.0.1-SNAPSHOT</base-web.version>
+		<base-service.version>0.0.1-SNAPSHOT</base-service.version>
+		<base-api.version>0.0.1-SNAPSHOT</base-api.version>
+		<base-common.version>0.0.1-SNAPSHOT</base-common.version>
+		<base-gateway.version>0.0.1-SNAPSHOT</base-gateway.version>
+		
+		<!-- spring.boot.version 2.4.0.RELEASE+ -->
+		<spring.cloud.alibaba.version>2020.0.RC1</spring.cloud.alibaba.version>
+        <spring.cloud.version>2020.0.2</spring.cloud.version>
+        <!-- spring.boot.version 2.3.9.RELEASE- -->
+<!-- 		<spring.cloud.alibaba.version>2.2.5.RELEASE</spring.cloud.alibaba.version> -->
+<!--         <spring.cloud.version>Hoxton.SR9</spring.cloud.version> -->
+        <aliyun-spring-boot.version>1.0.0</aliyun-spring-boot.version>
+	</properties>
+
+	<!-- 全局依赖的声明，并不会引入依赖 -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Cloud Alibaba -->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Spring Cloud -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--  Spring Boot Starters for Alibaba Cloud services -->
+	        <dependency>
+	            <groupId>com.alibaba.cloud</groupId>
+	            <artifactId>aliyun-spring-boot-dependencies</artifactId>
+	            <version>${aliyun-spring-boot.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

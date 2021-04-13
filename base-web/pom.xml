@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.meizu.base</groupId>
+		<artifactId>base-master</artifactId>
+		<version>${base-master.version}</version>
+	</parent>
+	<artifactId>base-web</artifactId>
+	<version>${base-web.version}</version>
+	<name>base-web</name>
+	<packaging>jar</packaging>
+
+	<properties>
+		<mybatis-spring.version>2.1.4</mybatis-spring.version>
+		<pagehelper.version>1.3.0</pagehelper.version>
+		<druid.version>1.2.5</druid.version>
+		<rocketmq.version>2.2.0</rocketmq.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.meizu.base</groupId>
+			<artifactId>base-api</artifactId>
+			<version>${base-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.meizu.base</groupId>
+			<artifactId>base-common</artifactId>
+			<version>${base-common.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelper.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId> -->
+<!-- 		</dependency> -->
+		<!-- spring-boot-2.4.0+后加入 -->
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+
+
+		<dependency>
+		    <groupId>com.alibaba.cloud</groupId>
+		    <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba.cloud</groupId>
+		    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.rocketmq</groupId>
+		    <artifactId>rocketmq-spring-boot-starter</artifactId>
+		    <version>${rocketmq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+		
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

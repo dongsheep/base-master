@@ -1,0 +1,58 @@
+server:
+  port: 8070
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/base_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  application:
+    name: base-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    #Redis服务器地址
+    host: 127.0.0.1
+    #Redis服务器连接端口
+    port: 6379
+    password: foobared
+    #连接超时时间（毫秒）
+    timeout: 10000
+
+#指定日志配置文件，默认是log4j2-spring.xml，推荐使用log4j2.xml
+logging:
+   config: classpath:log4j2.xml
+   level:
+      com.alibaba.nacos.client.naming: warn
+
+mybatis:
+  #typeAliasesPackage: com.meizu.base.entity
+  #指定mapper文件
+  mapperLocations: classpath:mapper/**/*Mapper.xml        
+
+pagehelper: 
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql 
+
+#seata配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_tx_group_test
+  service:
+    vgroup-mapping:
+      my_tx_group_test: default
+    grouplist:
+      default: 172.16.180.93:8091
+      
+      
+      

@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: base-gateway
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: base-web
+          uri: http://localhost:8080
+          predicates:
+            - Path=/hello2/**
+
+      
+      

@@ -1,0 +1,106 @@
+server:
+  port: 8080
+#  tomcat:
+#    threads:
+#      max: 10
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/base_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  application:
+    name: base-web
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #注册地址
+#        namespace: 9f5df76b-462f-47c2-8418-1d6525f0bbc1 #命名空间
+    sentinel:
+      transport:
+        #sentinel控制台地址
+        dashboard: 172.16.180.93:8080
+  #允许存在多个Feign调用相同Service的接口
+  main:
+    allow-bean-definition-overriding: true 
+
+  redis:
+    #Redis服务器地址
+    host: 127.0.0.1
+    #Redis服务器连接端口
+    port: 6379
+    password: foobared
+    #连接超时时间（毫秒）
+    timeout: 10000
+
+#指定日志配置文件，默认是log4j2-spring.xml，推荐使用log4j2.xml
+logging:
+   config: classpath:log4j2.xml
+   level:
+      com.alibaba.nacos.client.naming: warn
+
+feign:
+  client:
+    config:
+      default: 
+        connectTimeout: 1000 # 设置超时
+        readTimeout: 1000
+#        retryer: NEVER_RETRY
+#  httpclient: 
+#    connection-timeout: 5000
+  #开启Hystrix降级处理
+#  hystrix: 
+#    enabled: false
+  #feign整合sentinel
+  sentinel:
+    enabled: true
+    
+#ribbon:
+#  #ribbon饥饿模式
+#  eager-load:
+#    enabled: true
+#    clients: base-service
+#  #超时
+#  ReadTimeout: 5000
+#  ConnectTimeout: 5000
+    
+#seata配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  #这个服务组名一定要统一
+  tx-service-group: my_tx_group_test
+  service:
+    vgroup-mapping:
+      my_tx_group_test: default
+    grouplist:
+      default: 172.16.180.93:8091
+      
+#服务监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+  endpoint:
+    health:
+      show-details: always
+      
+rocketmq:
+  #rocketmq的NameServer地址
+  name-server: 172.16.180.93:9876
+  # 生产者端配置
+  producer:
+    group: my_test_producer_group
+  consumer:
+    group: my_test_consumer_group
+  topic: my_topic
+
+      
+      
