@@ -5,13 +5,29 @@ spring:
   application:
     name: base-gateway
   cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # nacos中心地址
+        namespace: public
+        group: DEFAULT_GROUP
+        username: nacos
+        password: nacos
     gateway:
       enabled: true
-      routes:
-        - id: base-web
-          uri: http://localhost:8080
-          predicates:
-            - Path=/hello2/**
+      discovery:
+        locator:
+          enabled: true # 让gateway可以发现nacos中的微服务
+      routes: # 路由数组
+        - id: base-web-route # 当前路由的唯一标识
+          #uri: http://localhost:8080 # 转发地址
+          uri: lb://base-web # lb指的是按名称从nacos中获取微服务，并遵循负载均衡策略
+          order: 1 # 路由的优先级，数字越小优先级越高
+          predicates: # 断言，条件判断，返回boolean，转发满足的条件
+            - Path=/base-web-test/**  # 请求路径满足Path的规则时，路由才进行转发
+            - Method=GET,POST
+#            - Age=18,70
+          filters: # 过滤器，请求过程中的处理，PRE,POST，局部,全部(统一鉴权，安全校验)
+            - StripPrefix=1 # 在请求转发之前去掉一层路径
 
       
       

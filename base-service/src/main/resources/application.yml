@@ -17,6 +17,25 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        username: nacos
+        password: nacos
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8092 #sentinel控制台地址
+        port: 8719 #默认8719，假如被占用了会自动从8719开始依次+1扫描。直至找到未被占用的端口
+      eager: true
+      datasource:
+        ds1:
+          nacos: #sentinel持久化，在nacos配置中心配置流控规则
+            server-addr: 127.0.0.1:8848
+            dataId: base-service-sentinel.json
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+  main:
+    allow-bean-definition-overriding: true #允许存在多个Feign调用相同Service的接口，后来发现的bean会覆盖之前相同名称的bean
   redis:
     #Redis服务器地址
     host: 127.0.0.1
@@ -42,17 +61,54 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql 
+  
+feign:
+  sentinel:
+    enabled: true
+
+#服务监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+  endpoint:
+    health:
+      show-details: always
+
+#rockermq配置
+rocketmq:
+  name-server: 172.16.180.93:9876 #rocketmq的NameServer地址
+#  consumer:
+#    group: my_test_consumer_group # 消费者端配置
 
 #seata配置
 seata:
-  enabled: true
-  application-id: ${spring.application.name}
-  tx-service-group: my_tx_group_test
+  #  enabled: true
+  #  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
   service:
     vgroup-mapping:
-      my_tx_group_test: default
-    grouplist:
-      default: 172.16.180.93:8091
-      
+      my_test_tx_group: default
+  #注册中心位file的时候使用
+  #    grouplist:
+  #      default: 127.0.0.1:8091
+  config:
+    type: nacos
+    nacos:
+      server-addr: 172.16.180.93:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 172.16.180.93:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+     
       
       

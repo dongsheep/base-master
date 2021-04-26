@@ -2,6 +2,7 @@ package com.meizu.base.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.meizu.base.constant.StatusCode;
 import com.meizu.base.domain.UserEntity;
 import com.meizu.base.dto.UserDto;
-import com.meizu.base.exception.BussinessException;
+import com.meizu.base.exception.BusinessException;
 import com.meizu.base.mapper.UserMapper;
 import com.meizu.base.service.UserService;
-import com.meizu.base.util.LogUtil;
 import com.meizu.base.util.RedisUtil;
 
 import cn.hutool.core.date.DateUtil;
@@ -23,7 +23,7 @@ import cn.hutool.core.date.DateUtil;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	private static Logger log = LogUtil.get(UserServiceImpl.class);
+	private static Logger log = LogManager.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 			return userMapper.findUserById(user.getId());
 		} else {
 			log.warn("addUser success zero...");
-			throw new BussinessException(StatusCode.INTERNAL_ERROR);
+			throw new BusinessException(StatusCode.INTERNAL_ERROR);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 			return userMapper.findUserById(user.getId());
 		} else {
 			log.warn("updUser success zero...");
-			throw new BussinessException(StatusCode.INTERNAL_ERROR);
+			throw new BusinessException(StatusCode.INTERNAL_ERROR);
 		}
 	}
 

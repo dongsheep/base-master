@@ -5,12 +5,6 @@ server:
 #      max: 10
 
 spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/base_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
-    driverClassName: com.mysql.cj.jdbc.Driver
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -19,23 +13,33 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848 #注册地址
-#        namespace: 9f5df76b-462f-47c2-8418-1d6525f0bbc1 #命名空间
+        server-addr: 127.0.0.1:8848 #nacos中心地址
+        namespace: public
+        group: DEFAULT_GROUP
+        username: nacos
+        password: nacos
     sentinel:
       transport:
-        #sentinel控制台地址
-        dashboard: 172.16.180.93:8080
-  #允许存在多个Feign调用相同Service的接口
+        dashboard: 127.0.0.1:8092 #sentinel控制台地址
+        port: 8719 #默认8719，假如被占用了会自动从8719开始依次+1扫描。直至找到未被占用的端口
+      eager: true
+      datasource:
+        ds1:
+          nacos: #sentinel持久化，在nacos配置中心配置流控规则
+            server-addr: 127.0.0.1:8848
+            dataId: base-web-sentinel.json
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
   main:
-    allow-bean-definition-overriding: true 
-
+    allow-bean-definition-overriding: true #允许存在多个Feign调用相同Service的接口，后来发现的bean会覆盖之前相同名称的bean
   redis:
     #Redis服务器地址
     host: 127.0.0.1
     #Redis服务器连接端口
     port: 6379
     password: foobared
-    #连接超时时间（毫秒）
+             #连接超时时间（毫秒）
     timeout: 10000
 
 #指定日志配置文件，默认是log4j2-spring.xml，推荐使用log4j2.xml
@@ -45,11 +49,11 @@ logging:
       com.alibaba.nacos.client.naming: warn
 
 feign:
-  client:
-    config:
-      default: 
-        connectTimeout: 1000 # 设置超时
-        readTimeout: 1000
+#  client:
+#    config:
+#      default: 
+#        connectTimeout: 1000 # 设置超时
+#        readTimeout: 1000
 #        retryer: NEVER_RETRY
 #  httpclient: 
 #    connection-timeout: 5000
@@ -69,18 +73,6 @@ feign:
 #  ReadTimeout: 5000
 #  ConnectTimeout: 5000
     
-#seata配置
-seata:
-  enabled: true
-  application-id: ${spring.application.name}
-  #这个服务组名一定要统一
-  tx-service-group: my_tx_group_test
-  service:
-    vgroup-mapping:
-      my_tx_group_test: default
-    grouplist:
-      default: 172.16.180.93:8091
-      
 #服务监控
 management:
   endpoints:
@@ -92,15 +84,11 @@ management:
     health:
       show-details: always
       
+#rockermq配置
 rocketmq:
-  #rocketmq的NameServer地址
-  name-server: 172.16.180.93:9876
-  # 生产者端配置
+  name-server: 172.16.180.93:9876 #rocketmq的NameServer地址
   producer:
-    group: my_test_producer_group
-  consumer:
-    group: my_test_consumer_group
-  topic: my_topic
+    group: my_test_producer_group # 生产者端配置
 
       
       
