@@ -86,7 +86,7 @@ management:
       
 #rockermq配置
 rocketmq:
-  name-server: 172.16.180.93:9876 #rocketmq的NameServer地址
+  name-server: 127.0.0.1:9876 #rocketmq的NameServer地址
   producer:
     group: my_test_producer_group # 生产者端配置
 

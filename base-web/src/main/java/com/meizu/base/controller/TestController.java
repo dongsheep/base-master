@@ -21,6 +21,7 @@ import com.meizu.base.dto.ResultDto;
 import com.meizu.base.dto.UserDto;
 import com.meizu.base.exception.BusinessException;
 import com.meizu.base.service.HelloService;
+import com.meizu.base.service.MqService;
 import com.meizu.base.service.UserService;
 import com.meizu.base.util.ResponseUtil;
 
@@ -150,5 +151,19 @@ public class TestController {
 		//当发送的消息很重要是，且对响应时间不敏感的时候采用sync方式;
 		//当发送的消息很重要，且对响应时间非常敏感的时候采用async方式
 	}
+	
+	@Autowired
+	private MqService mqService;
+	
+	@PostMapping("/tranMsg")
+	public void tranMsg() {
+		UserDto user = new UserDto();
+		user.setName("Gerrard");
+		user.setSex(2);
+		user.setSexText("男");
+		mqService.createBefore(user);
+	}
+	
+	
 
 }

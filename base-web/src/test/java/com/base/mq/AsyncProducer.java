@@ -13,9 +13,9 @@ public class AsyncProducer {
 	
 	public static void main(String[] args) throws Exception {
 		// Instantiate with a producer group name.
-		DefaultMQProducer producer = new DefaultMQProducer("my_mq_test_producer_group");
+		DefaultMQProducer producer = new DefaultMQProducer("test_producer");
 		// Specify name server addresses.
-		producer.setNamesrvAddr("http://172.16.180.93:9876");
+		producer.setNamesrvAddr("http://127.0.0.1:9876");
 		// Launch the instance.
 		producer.start();
 		producer.setRetryTimesWhenSendAsyncFailed(0);
@@ -25,7 +25,7 @@ public class AsyncProducer {
 		for (int i = 0; i < messageCount; i++) {
 			try {
 				final int index = i;
-				Message msg = new Message("test_topic", "TagA", "OrderID188", "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
+				Message msg = new Message("TopicTest", "TagA", "OrderID188", ("Hello world" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
 				producer.send(msg, new SendCallback() {
 					@Override
 					public void onSuccess(SendResult sendResult) {
@@ -45,6 +45,7 @@ public class AsyncProducer {
 			}
 		}
 		countDownLatch.await(5, TimeUnit.SECONDS);
+		System.out.println("main thread go head...");
 		producer.shutdown();
 	}
 	

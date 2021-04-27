@@ -14,19 +14,19 @@ public class SyncProducer {
 
 	public static void main(String[] args) throws MQClientException, UnsupportedEncodingException, RemotingException, MQBrokerException, InterruptedException {
 		// Instantiate with a producer group name.
-		DefaultMQProducer producer = new DefaultMQProducer("my_mq_test_producer_group");
+		DefaultMQProducer producer = new DefaultMQProducer("test_producer");
 		// Specify name server addresses.
-		producer.setNamesrvAddr("http://172.16.180.93:9876");
+		producer.setNamesrvAddr("http://127.0.0.1:9876");
 		// Launch the instance.
 		producer.start();
-		for (int i = 0; i < 10; i++) {
+//		for (int i = 0; i < 10; i++) {
 			// Create a message instance, specifying topic, tag and message body.
-			Message msg = new Message("test_topic" /* Topic */, "TagA" /* Tag */, ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
-			);
+//			Message msg = new Message("TopicTest" /* Topic */, "TagA" /* Tag */, ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */);
+			Message msg = new Message("TopicTest" /* Topic */, "TagA" /* Tag */, ("Hello RocketMQ ...").getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */);
 			// Call send message to deliver message to one of brokers.
 			SendResult sendResult = producer.send(msg);
 			System.out.printf("%s%n", sendResult);
-		}
+//		}
 		// Shut down once the producer instance is not longer in use.
 		producer.shutdown();
 	}

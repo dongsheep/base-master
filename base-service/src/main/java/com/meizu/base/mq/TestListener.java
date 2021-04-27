@@ -2,13 +2,20 @@ package com.meizu.base.mq;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.rocketmq.spring.annotation.ConsumeMode;
+import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
 
 import com.meizu.base.dto.UserDto;
 
-@RocketMQMessageListener(consumerGroup = "my_test_consumer_group", topic = "my_topic")
+@RocketMQMessageListener(
+		consumerGroup = "test_consumer", // 消费者组名 
+		topic = "TopicTest", // 消费主题
+		consumeMode = ConsumeMode.CONCURRENTLY, // 消费模式，同步（默认），顺序
+		messageModel = MessageModel.CLUSTERING // 消息模式，集群（默认），广播
+)
 @Component
 public class TestListener implements RocketMQListener<UserDto> {
 

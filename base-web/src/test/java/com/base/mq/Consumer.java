@@ -14,16 +14,16 @@ public class Consumer {
 	public static void main(String[] args) throws InterruptedException, MQClientException {
 
 		// Instantiate with specified consumer group name.
-		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("my_mq_test_group");
+		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("test_consumer");
 
 		// Specify name server addresses.
-		consumer.setNamesrvAddr("http://172.16.180.93:9876");
-
+		consumer.setNamesrvAddr("http://127.0.0.1:9876");
+		
 		// Subscribe one more more topics to consume.
-		consumer.subscribe("TopicTest", "*");
+//		consumer.subscribe("TopicTest", "*");
+		consumer.subscribe("tx_topic", "*");
 		// Register callback to execute on arrival of messages fetched from brokers.
 		consumer.registerMessageListener(new MessageListenerConcurrently() {
-
 			@Override
 			public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
 				System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
